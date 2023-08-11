@@ -1,0 +1,142 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>dev.imprex</groupId>
+	<artifactId>shielded-impact</artifactId>
+	<version>${revision}</version>
+	<packaging>pom</packaging>
+
+	<name>ShieldedImpact</name>
+	<url>https://github.com/Imprex-Development/shielded-impact</url>
+	<description>Shielded Impact</description>
+	<inceptionYear>2023</inceptionYear>
+
+	<issueManagement>
+		<system>GitHub</system>
+		<url>https://github.com/Imprex-Development/shielded-impact/issues</url>
+	</issueManagement>
+
+	<properties>
+		<revision>1.0.0-b0</revision>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+		<dependency.bukkit.version>1.18-R0.1-SNAPSHOT</dependency.bukkit.version>
+		<dependency.bstats.version>3.0.0</dependency.bstats.version>
+
+		<plugin.compile.version>3.10.1</plugin.compile.version>
+		<plugin.shade.version>3.3.0</plugin.shade.version>
+		<plugin.flatten.version>1.2.7</plugin.flatten.version>
+		<plugin.specialsource.version>1.2.4</plugin.specialsource.version>
+	</properties>
+
+	<repositories>
+		<repository>
+			<id>spigot-repo</id>
+			<url>https://hub.spigotmc.org/nexus/content/groups/public/</url>
+		</repository>
+		<repository>
+			<id>minecraft-libraries</id>
+			<url>https://libraries.minecraft.net</url>
+		</repository>
+	</repositories>
+
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>org.junit.jupiter</groupId>
+				<artifactId>junit-jupiter</artifactId>
+				<version>5.9.2</version>
+			</dependency>
+			<dependency>
+				<groupId>com.mojang</groupId>
+				<artifactId>brigadier</artifactId>
+				<version>1.0.18</version>
+				<scope>provided</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+
+	<build>
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+				<filtering>true</filtering>
+			</resource>
+		</resources>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>${plugin.compile.version}</version>
+				<configuration>
+					<release>17</release>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-shade-plugin</artifactId>
+				<version>${plugin.shade.version}</version>
+				<executions>
+					<execution>
+						<phase>package</phase>
+						<goals>
+							<goal>shade</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<relocations>
+						<relocation>
+							<pattern>org.bstats</pattern>
+							<shadedPattern>net.imprex.shieldedimpact.metrics</shadedPattern>
+						</relocation>
+					</relocations>
+					<filters>
+						<filter>
+							<artifact>*:*</artifact>
+							<excludes>
+								<exclude>META-INF/*.SF</exclude>
+								<exclude>META-INF/*.DSA</exclude>
+								<exclude>META-INF/*.RSA</exclude>
+							</excludes>
+						</filter>
+					</filters>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>flatten-maven-plugin</artifactId>
+				<version>${plugin.flatten.version}</version>
+				<executions>
+					<execution>
+						<id>flatten</id>
+						<phase>package</phase>
+						<goals>
+							<goal>flatten</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>flatten.clean</id>
+						<phase>clean</phase>
+						<goals>
+							<goal>clean</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<updatePomFile>true</updatePomFile>
+					<flattenMode>clean</flattenMode>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
+	<modules>
+		<module>shielded-impact-plugin</module>
+		<module>shielded-impact-api</module>
+		<module>shielded-impact-nms</module>
+		<module>shielded-impact-command</module>
+		<module>shielded-impact-l10n</module>
+		<module>shielded-impact-common</module>
+	</modules>
+</project>

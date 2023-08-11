@@ -1,0 +1,30 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>dev.imprex</groupId>
+		<artifactId>shielded-impact-nms</artifactId>
+		<version>${revision}</version>
+	</parent>
+
+	<artifactId>shielded-impact-nms-api</artifactId>
+
+	<dependencies>
+		<dependency>
+			<groupId>dev.imprex</groupId>
+			<artifactId>shielded-impact-api</artifactId>
+			<version>${revision}</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.spigotmc</groupId>
+			<artifactId>spigot-api</artifactId>
+			<version>${dependency.bukkit.version}</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.mojang</groupId>
+			<artifactId>brigadier</artifactId>
+		</dependency>
+	</dependencies>
+</project>

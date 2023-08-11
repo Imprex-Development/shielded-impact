@@ -6,7 +6,6 @@ import org.bukkit.entity.Entity;
 
 import dev.imprex.shieldedimpact.api.ShieldedInfo;
 import dev.imprex.shieldedimpact.api.ShieldedPlayer;
-import dev.imprex.shieldedimpact.api.ShieldedReference;
 import dev.imprex.shieldedimpact.api.ShieldedSetting;
 import dev.imprex.shieldedimpact.plugin.Shield;
 import dev.imprex.shieldedimpact.plugin.ShieldedConstructor;

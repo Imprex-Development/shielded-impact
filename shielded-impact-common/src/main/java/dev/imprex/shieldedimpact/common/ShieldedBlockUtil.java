@@ -9,20 +9,20 @@ import org.bukkit.util.NumberConversions;
 
 public class ShieldedBlockUtil {
 
-	public static Block getNonPassableBlock(World world, double x, double y, double z, int maxDepth) {
+	public static Block getNonPassableBlockY(World world, double x, double y, double z, int maxDepth) {
 		int floorX = NumberConversions.floor(x);
 		int floorY = NumberConversions.floor(y);
 		int floorZ = NumberConversions.floor(z);
 
 		Block block = world.getBlockAt(floorX, floorY, floorZ);
 		if (block.isPassable()) {
-			return getNonPassableBlock(world, floorX, floorY, floorZ, false, maxDepth, 0);
+			return getNonPassableBlockY(world, floorX, floorY, floorZ, false, maxDepth, 0);
 		}
 
-		return getNonPassableBlock(world, floorX, floorY, floorZ, true, maxDepth, 0);
+		return getNonPassableBlockY(world, floorX, floorY, floorZ, true, maxDepth, 0);
 	}
 
-	public static Block getNonPassableBlock(World world, int x, int y, int z, boolean up, int maxDepth, int currentDepth) {
+	public static Block getNonPassableBlockY(World world, int x, int y, int z, boolean up, int maxDepth, int currentDepth) {
 		if (maxDepth < currentDepth) {
 			return null;
 		}
@@ -34,7 +34,7 @@ public class ShieldedBlockUtil {
 			return world.getBlockAt(x, y + 1, z);
 		}
 
-		return getNonPassableBlock(world, x, y + (up ? 1 : -1), z, up, maxDepth, currentDepth + 1);
+		return getNonPassableBlockY(world, x, y + (up ? 1 : -1), z, up, maxDepth, currentDepth + 1);
 	}
 
 	public static double getBlockOffsetY(World world, double x, double y, double z) {

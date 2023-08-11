@@ -1,31 +1,26 @@
 package dev.imprex.shieldedimpact.plugin;
 
 import org.bukkit.Bukkit;
-import org.bukkit.Particle;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
-import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
 import org.bukkit.event.HandlerList;
 import org.bukkit.plugin.ServicePriority;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import dev.imprex.shieldedimpact.api.ShieldedPlayer;
 import dev.imprex.shieldedimpact.api.ShieldedPlugin;
 import dev.imprex.shieldedimpact.api.ShieldedRegistry;
-import dev.imprex.shieldedimpact.api.ShieldedSettingKey;
 import dev.imprex.shieldedimpact.api.l10n.ShieldedLanguage;
 import dev.imprex.shieldedimpact.nms.api.ShieldedNmsApi;
-import dev.imprex.shieldedimpact.plugin.shield.TestShield;
 
 public class ShieldedImpactPlugin extends JavaPlugin implements ShieldedPlugin {
 
 	public static final String NAMESPACE_KEY = "shieldedimpact";
 
 	private ShieldedController controller;
-	private ShieldedPlayerProvider playerProvider;
-
+	private ShieldedRegistry registry;
 	private ShieldedListener listener;
+
+	private ShieldedLanguage language;
+
+	private ShieldedPlayerProvider playerProvider;
 
 	@Override
 	public void onLoad() {
@@ -41,33 +36,6 @@ public class ShieldedImpactPlugin extends JavaPlugin implements ShieldedPlugin {
 		this.controller.start();
 
 		Bukkit.getPluginManager().registerEvents(this.listener, this);
-
-		getCommand("shield").setExecutor(new CommandExecutor() {
-			
-			@Override
-			public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-				if (!(sender instanceof Player player)) {
-					return false;
-				}
-
-				if (args.length > 0) {
-					ShieldedPlayer shieldedPlayer = playerProvider.getPlayerIfLoaded(player);
-					ShieldedSettingKey<Particle> key = ShieldedSettingKey.key(ShieldedImpactPlugin.NAMESPACE_KEY, "test", "particle");
-					shieldedPlayer.setSetting(key, Particle.CLOUD);
-					return true;
-				}
-
-				playerProvider.getPlayer(player).whenComplete((shieldedPlayer, throwable) -> {
-					if (throwable != null) {
-						throwable.printStackTrace();
-						return;
-					}
-
-					shieldedPlayer.enableShield(TestShield.class);
-				});
-				return true;
-			}
-		});
 	}
 
 	@Override
@@ -93,12 +61,12 @@ public class ShieldedImpactPlugin extends JavaPlugin implements ShieldedPlugin {
 
 	@Override
 	public ShieldedLanguage getLanguage() {
-		return null;
+		return this.language;
 	}
 
 	@Override
 	public ShieldedRegistry getShieldRegistry() {
-		return null;
+		return this.registry;
 	}
 
 	@Override

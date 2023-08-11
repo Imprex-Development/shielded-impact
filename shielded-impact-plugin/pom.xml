@@ -17,6 +17,12 @@
 		</dependency>
 		<dependency>
 			<groupId>dev.imprex</groupId>
+			<artifactId>shielded-impact-common</artifactId>
+			<version>${revision}</version>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>dev.imprex</groupId>
 			<artifactId>shielded-impact-nms-api</artifactId>
 			<version>${revision}</version>
 			<scope>compile</scope>
